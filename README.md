@@ -7,15 +7,18 @@
 
 ---
 
+## Acesse a API online:  
+👉 **https://medflow-api.onrender.com**
+
 ## ✨ Sobre o Projeto
 Um **CRUD de Médicos** desenvolvido com **Spring Boot**, utilizando:
 
 - JPA/Hibernate para persistência
-- Flyway para versionamento de banco
 - Validação de dados com Jakarta Validation
 - DTOs para separar dados da entidade
 - Soft delete de registros
 - Paginação de resultados
+- Render para hospedagem do banco de dados e da API.
 
 ---
 
@@ -27,7 +30,6 @@ Um **CRUD de Médicos** desenvolvido com **Spring Boot**, utilizando:
 - ❌ Exclusão com soft delete  
 - 🏥 Gestão de endereço via Embedded  
 - 🛠️ Validação automática de campos  
-- 🗂️ Migrations versionadas com Flyway  
 
 ---
 
@@ -38,16 +40,17 @@ Um **CRUD de Médicos** desenvolvido com **Spring Boot**, utilizando:
 
 ## 🗂️ Estrutura do Projeto
 
-| Caminho                     | Descrição                          |
-|------------------------------|------------------------------------|
-| `src/main/java`              | Código-fonte Java                  |
-| ├─ `com.pedrosantiago.api`  | Pacote base                        |
-| │  ├─ `controller`          | REST controllers                   |
-| │  ├─ `medico`              | Entidade, DTOs, Repository         |
-| │  └─ `endereco`            | Classe embutida de endereço        |
-| └─ `resources`              | Recursos do projeto                |
-|    ├─ `application.properties` | Configurações do Spring Boot     |
-|    └─ `db/migration`        | Scripts Flyway (migrations SQL)    |
+| Caminho                           | Descrição                              |
+|-----------------------------------|------------------------------------------|
+| `src/main/java`                   | Código-fonte Java                        |
+| ├─ `com.pedrosantiago.api`        | Pacote base                              |
+| │  ├─ `controllers`               | Classes REST Controllers                 |
+| │  ├─ `models`                    | Entidades e DTOs                         |
+| │  ├─ `repository`                | Interfaces de acesso ao banco (JPA)      |
+| │  └─ `service`                   | Regras de negócio e lógica da aplicação  |
+|                                   |                                          |
+| `src/main/resources`              | Recursos do projeto                      |
+| ├─ `application.properties`       | Configurações do Spring Boot             |
 
 </details>
 
@@ -72,36 +75,17 @@ Um **CRUD de Médicos** desenvolvido com **Spring Boot**, utilizando:
 
 properties
 
-spring.datasource.url=jdbc:mysql://localhost:3306/vollmed_api
+spring.datasource.url=${DATABASE_URL}
+spring.datasource.username=${DATABASE_USERNAME}
+spring.datasource.password=${DATABASE_PASSWORD}
 
-spring.datasource.username=root
-
-spring.datasource.password=senha
-
-spring.jpa.hibernate.ddl-auto=update
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 
 spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
 
 ---
-
-⚠️ Lembre-se de criar o banco antes de rodar o projeto:
-
----
-
--SQL
-
-create database vollmed_api;
-
----
-
-💡 Dicas
-
-
--Garanta que o Lombok está instalado e o annotation processing ativado no IntelliJ.
-
--Ordene corretamente suas migrations do Flyway (V1__, V2__, V3__).
-
--Use DTOs para separar dados da entidade e manter a API limpa.
 
 -Teste os endpoints com Postman ou Insomnia.
 
